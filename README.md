@@ -1,16 +1,15 @@
-# React + Vite
+1. Why is it dangerous to store passwords in plain text, and how does hashing prevent harm if the database is compromised?
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Storing passwords in plain text is dangerous because anyone who accesses the database can read the users' actual passwords. If the database is compromised, attackers could use those passwords to access users' accounts. Password hashing helps protect users by converting passwords into hashes that are not meant to be reversed into the original passwords. In our project, bcryptjs hashes the password before saving it in MongoDB, making it more difficult for attackers to misuse stolen password data.
 
-Currently, two official plugins are available:
+2. The login endpoint returns the same error for "user not found" and "wrong password." Why is this better than giving specific messages?
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Returning the same error message for an incorrect email and an incorrect password helps protect users' privacy. If the system gave different messages, attackers could discover which email addresses have registered accounts. Using the same message, such as "Invalid credentials," makes it harder to identify existing users. This improves the security of the login process.
 
-## React Compiler
+3. In your own words, what does the middleware do on every protected request, and why is it better than putting token-checking code inside every route handler?
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+    Authentication middleware checks whether a request contains a valid JWT token before allowing it to access a protected route. If the token is missing, invalid, or expired, the middleware rejects the request. Using middleware is better than repeating the same security code in every route because it makes the application easier to maintain and reduces duplicated code. It also helps ensure that the same authentication checks are applied consistently to protected routes.
 
-## Expanding the Oxlint configuration
+4. What is one thing that could still go wrong in this system (e.g., token theft, no HTTPS, weak secrets), and how would you address it in a real application?
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+   One possible security problem is token theft, where an attacker obtains a user's JWT and uses it to access protected information. To reduce this risk, a real application should use HTTPS to protect data transmitted between the client and server. It should also store tokens securely, keep secrets private, and use appropriate token expiration and revocation strategies. These measures help reduce the risk of unauthorized access.
