@@ -13,3 +13,4 @@ Returning the same error message for an incorrect email and an incorrect passwor
 4. What is one thing that could still go wrong in this system (e.g., token theft, no HTTPS, weak secrets), and how would you address it in a real application?
 
    One possible security problem is token theft, where an attacker obtains a user's JWT and uses it to access protected information. To reduce this risk, a real application should use HTTPS to protect data transmitted between the client and server. It should also store tokens securely, keep secrets private, and use appropriate token expiration and revocation strategies. These measures help reduce the risk of unauthorized access.
+   
