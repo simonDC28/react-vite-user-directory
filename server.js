@@ -2,12 +2,15 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors'); // 1. Import cors
 
 const authRoutes = require('./routes/auth');
 const studentRoutes = require('./routes/students');
 
 const app = express();
 
+// 2. Enable CORS for Vite frontend
+app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
