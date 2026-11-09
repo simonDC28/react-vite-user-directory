@@ -2,19 +2,22 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors'); // 1. Import cors
+const cors = require('cors'); 
 
 const authRoutes = require('./routes/auth');
 const studentRoutes = require('./routes/students');
+const uploadRoutes = require('./routes/upload'); // 1. Import upload route
 
 const app = express();
 
-// 2. Enable CORS for Vite frontend
+// Enable CORS for Vite frontend
 app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
 
+// Register routes
 app.use('/api/auth', authRoutes);
 app.use('/api/students', studentRoutes);
+app.use('/api/upload', uploadRoutes); // 2. Add upload route here
 
 const PORT = process.env.PORT || 3000;
 const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/user-directory';
