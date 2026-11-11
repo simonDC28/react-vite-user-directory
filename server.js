@@ -6,7 +6,8 @@ const cors = require('cors');
 
 const authRoutes = require('./routes/auth');
 const studentRoutes = require('./routes/students');
-const uploadRoutes = require('./routes/upload'); // 1. Import upload route
+const uploadRoutes = require('./routes/upload'); 
+const statsRoutes = require('./routes/stats');
 
 const app = express();
 
@@ -17,7 +18,8 @@ app.use(express.json());
 // Register routes
 app.use('/api/auth', authRoutes);
 app.use('/api/students', studentRoutes);
-app.use('/api/upload', uploadRoutes); // 2. Add upload route here
+app.use('/api/upload', uploadRoutes); 
+app.use('/api/stats', statsRoutes);
 
 const PORT = process.env.PORT || 3000;
 const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/user-directory';

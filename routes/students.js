@@ -3,23 +3,39 @@ const router = express.Router();
 const requireAuth = require('../middleware/auth');
 const Student = require('../models/Student');
 
+
 router.get('/', requireAuth, async (req, res) => {
   try {
-    const students = await Student.find();
+    const students = await Student.find()
+      .populate('createdBy', 'email role');
+
     res.json(students);
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
+
 router.post('/', requireAuth, async (req, res) => {
   try {
-    const newStudent = await Student.create(req.body);
+    const { name, email, age, isActive } = req.body;
+
+    const newStudent = await Student.create({
+      name,
+      email,
+      age,
+      isActive,
+      createdBy: req.user.userId
+    });
+
     res.status(201).json(newStudent);
+
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
+
 
 router.put('/:id', requireAuth, async (req, res) => {
   try {
