@@ -14,7 +14,7 @@ router.get('/', requireAuth, async (req, res) => {
       // 1. Only include students with an assigned creator
       {
         $match: {
-          createdBy: { $type: 'objectId' }
+          createdBy: { $exists: true }
         }
       },
 
